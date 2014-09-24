@@ -97,11 +97,9 @@ window.navigator.geolocation.getCurrentPosition(
           splashWindow.show();
           
           //Set London as current location
-          currentLat = 51.493916;
-          currentLng = -0.137587;
-          
-          console.log('http://map.wami.it/nearest/'+currentLat.toFixed(6)+"/"+currentLng.toFixed(6)+"/type/"+data[e.itemIndex].replace(" ","_"));
-                    
+          //currentLat = 51.493916;
+          //currentLng = -0.137587;
+                              
           ajax({
             url:'http://map.wami.it/nearest/'+currentLat.toFixed(6)+"/"+currentLng.toFixed(6)+"/type/"+data[e.itemIndex].replace(" ","_"),
             type:'json'
