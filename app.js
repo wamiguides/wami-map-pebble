@@ -19,7 +19,7 @@ var parseFeed = function(data, quantity) {
     title = title.charAt(0).toUpperCase() + title.substring(1);
 
     // Get date/time substring
-    var distance =  (data.geometries[i].properties.distance*6371).toFixed(1)+"km";
+    var distance =  (data.geometries[i].properties.distance/1000).toFixed(1)+"km";
 
     // Add to menu items array
     items.push({
@@ -97,8 +97,8 @@ window.navigator.geolocation.getCurrentPosition(
           splashWindow.show();
           
           //Set London as current location
-          //currentLat = 51.493916;
-          //currentLng = -0.137587;
+          currentLat = 51.493916;
+          currentLng = -0.137587;
           
           console.log('http://map.wami.it/nearest/'+currentLat.toFixed(6)+"/"+currentLng.toFixed(6)+"/type/"+data[e.itemIndex].replace(" ","_"));
                     
@@ -111,7 +111,7 @@ window.navigator.geolocation.getCurrentPosition(
             var menu = parseFeed(dataNodes, 10);
             var resultsMenuTypes = new UI.Menu({
               sections: [{
-                title: dataNodes[e.itemIndex],
+                title: dataNodes.geometries[e.itemIndex],
                 items: menu
               }]
           });
@@ -122,20 +122,20 @@ window.navigator.geolocation.getCurrentPosition(
             // Assemble body string
             var content = "";
             var titleCard;
-            if (dataNodes[e.itemIndex].properties.name){
+            if (dataNodes.geometries[e.itemIndex].properties.name){
               titleCard = dataNodes.geometries[e.itemIndex].properties.name;
             } else {
               titleCard = dataNodes.geometries[e.itemIndex].properties.amenity;
             }
 
-            for(i=0; i<=Object.keys(dataNodes[e.itemIndex].properties).length-1; i++){
-              content += Object.keys(dataNodes[e.itemIndex].properties)[i]+": "+dataNodes[e.itemIndex].properties[Object.keys(dataNodes[e.itemIndex].properties)[i]]+"\n";
+            for(i=0; i<=Object.keys(dataNodes.geometries[e.itemIndex].properties).length-1; i++){
+              content += Object.keys(dataNodes.geometries[e.itemIndex].properties)[i]+": "+dataNodes.geometries[e.itemIndex].properties[Object.keys(dataNodes.geometries[e.itemIndex].properties)[i]]+"\n";
             }
 
             // Create the Card for detailed view
             var detailCard = new UI.Card({
               title: titleCard,
-              subtitle: "distance: "+(dataNodes.geometries[e.itemIndex].properties.distance*1000).toFixed(1)+"km",
+              subtitle: "distance: "+(dataNodes.geometries[e.itemIndex].properties.distance/1000).toFixed(1)+"km",
               body: content
             });
               detailCard.show();
