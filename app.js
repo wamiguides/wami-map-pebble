@@ -10,16 +10,19 @@ var parseFeed = function(data, quantity) {
   for(var i = 0; i < quantity; i++) {
     // Always upper case the description string
     //var title = data.list[i].weather[0].main;
-     var title;
-    if (data[i].tags.name){
-     title = data[i].tags.name;
+    console.log("--------------------");
+    console.log(data.geometries[i].properties.amenity);
+    console.log("--------------------");
+    var title;
+    if (data.geometries[i].properties.name){
+     title = data.geometries[i].properties.name;
     } else {
-      title = data[i].tags.amenity;
+      title = data.geometries[i].properties.amenity;
     }
     title = title.charAt(0).toUpperCase() + title.substring(1);
 
     // Get date/time substring
-    var distance =  (data[i].distance*6371).toFixed(1)+"km";
+    var distance =  (data.geometries[i].properties.distance*6371).toFixed(1)+"km";
 
     // Add to menu items array
     items.push({
@@ -94,12 +97,13 @@ window.navigator.geolocation.getCurrentPosition(
     
         // Add an action for SELECT
         resultsMenu.on('select', function(e) {
-          
           splashWindow.show();
           
           //Set London as current location
-          //currentLat = "51.493916";
-          //currentLng = "-0.137587";
+          currentLat = 51.493916;
+          currentLng = -0.137587;
+          
+          console.log('http://map.wami.it/nearest/'+currentLat.toFixed(6)+"/"+currentLng.toFixed(6)+"/type/"+data[e.itemIndex].replace(" ","_"));
                     
           ajax({
             url:'http://map.wami.it/nearest/'+currentLat.toFixed(6)+"/"+currentLng.toFixed(6)+"/type/"+data[e.itemIndex].replace(" ","_"),
@@ -121,20 +125,20 @@ window.navigator.geolocation.getCurrentPosition(
             // Assemble body string
             var content = "";
             var titleCard;
-            if (dataNodes[e.itemIndex].tags.name){
-              titleCard = dataNodes[e.itemIndex].tags.name;
+            if (dataNodes[e.itemIndex].properties.name){
+              titleCard = dataNodes.geometries[e.itemIndex].properties.name;
             } else {
-              titleCard = dataNodes[e.itemIndex].tags.amenity;
+              titleCard = dataNodes.geometries[e.itemIndex].properties.amenity;
             }
 
-            for(i=0; i<=Object.keys(dataNodes[e.itemIndex].tags).length-1; i++){
-              content += Object.keys(dataNodes[e.itemIndex].tags)[i]+": "+dataNodes[e.itemIndex].tags[Object.keys(dataNodes[e.itemIndex].tags)[i]]+"\n";
+            for(i=0; i<=Object.keys(dataNodes[e.itemIndex].properties).length-1; i++){
+              content += Object.keys(dataNodes[e.itemIndex].properties)[i]+": "+dataNodes[e.itemIndex].properties[Object.keys(dataNodes[e.itemIndex].properties)[i]]+"\n";
             }
 
             // Create the Card for detailed view
             var detailCard = new UI.Card({
               title: titleCard,
-              subtitle: "distance: "+(dataNodes[e.itemIndex].distance*6371).toFixed(1)+"km",
+              subtitle: "distance: "+(dataNodes.geometries[e.itemIndex].properties.distance*1000).toFixed(1)+"km",
               body: content
             });
               detailCard.show();
@@ -145,6 +149,8 @@ window.navigator.geolocation.getCurrentPosition(
       }, function(error) {
         console.log('Download failed: ' + error);
       });
+          
+  
     });
     
     // Show the Menu, hide the splash
