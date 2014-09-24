@@ -10,9 +10,6 @@ var parseFeed = function(data, quantity) {
   for(var i = 0; i < quantity; i++) {
     // Always upper case the description string
     //var title = data.list[i].weather[0].main;
-    console.log("--------------------");
-    console.log(data.geometries[i].properties.amenity);
-    console.log("--------------------");
     var title;
     if (data.geometries[i].properties.name){
      title = data.geometries[i].properties.name;
@@ -100,8 +97,8 @@ window.navigator.geolocation.getCurrentPosition(
           splashWindow.show();
           
           //Set London as current location
-          currentLat = 51.493916;
-          currentLng = -0.137587;
+          //currentLat = 51.493916;
+          //currentLng = -0.137587;
           
           console.log('http://map.wami.it/nearest/'+currentLat.toFixed(6)+"/"+currentLng.toFixed(6)+"/type/"+data[e.itemIndex].replace(" ","_"));
                     
