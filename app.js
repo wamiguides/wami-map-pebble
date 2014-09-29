@@ -155,6 +155,6 @@ window.navigator.geolocation.getCurrentPosition(
     console.log('Download failed: ' + error);
   });
 }, function (error) {
-    console.warn('locationWatcher (' + err.code + '): ' + err.message);
+    console.warn('locationWatcher (' + error.code + '): ' + error.message);
     pebble_set_message('Location unavailable!');
 },{ "timeout": 15000, "maximumAge": 60000 });
