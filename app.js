@@ -77,7 +77,7 @@ window.navigator.geolocation.getCurrentPosition(
     // Make request to wami MAP to get the node's types
     ajax(
       {
-        url:'http://map.wami.it/nodes',
+        url:'http://map.wami.it/poi/types',
         type:'json'
       },
       function(data) {
@@ -101,7 +101,7 @@ window.navigator.geolocation.getCurrentPosition(
           //currentLng = -0.137587;
                               
           ajax({
-            url:'http://map.wami.it/nearest/'+currentLat.toFixed(6)+"/"+currentLng.toFixed(6)+"/type/"+data[e.itemIndex].replace(" ","_"),
+            url:'http://map.wami.it/poi/nearest/'+currentLat.toFixed(6)+"/"+currentLng.toFixed(6)+"/params/"+data[e.itemIndex].replace(" ","_")+"/1500",
             type:'json'
           }, function(dataNodes) {
             splashWindow.hide();
