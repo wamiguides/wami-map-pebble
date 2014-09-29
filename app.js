@@ -101,7 +101,7 @@ window.navigator.geolocation.getCurrentPosition(
           //currentLng = -0.137587;
                               
           ajax({
-            url:'http://map.wami.it/poi/nearest/'+currentLat.toFixed(6)+"/"+currentLng.toFixed(6)+"/params/"+data[e.itemIndex].replace(" ","_")+"/1500",
+            url:'http://map.wami.it/poi/nearest/'+currentLat.toFixed(6)+"/"+currentLng.toFixed(6)+"/params/"+data[e.itemIndex].toLowerCase()+"/1500",
             type:'json'
           }, function(dataNodes) {
             splashWindow.hide();
