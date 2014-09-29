@@ -37,7 +37,7 @@ var parseTypes = function(data) {
   var items = [];
   for(var i = 0; i < data.length; i++) {
     items.push({
-      title: data[i].charAt(0).toUpperCase() + data[i].substring(1)
+      title: (data[i].charAt(0).toUpperCase() + data[i].substring(1)).replace("_"," ")
     });
   }
   return items;
@@ -101,7 +101,7 @@ window.navigator.geolocation.getCurrentPosition(
           //currentLng = -0.137587;
                               
           ajax({
-            url:'http://map.wami.it/poi/nearest/'+currentLat.toFixed(6)+"/"+currentLng.toFixed(6)+"/params/"+data[e.itemIndex].toLowerCase()+"/1500",
+            url:'http://map.wami.it/poi/nearest/'+currentLat.toFixed(6)+"/"+currentLng.toFixed(6)+"/params/"+data[e.itemIndex].toLowerCase().replace(" ","_")+"/1500",
             type:'json'
           }, function(dataNodes) {
             splashWindow.hide();
